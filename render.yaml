@@ -1,0 +1,32 @@
+services:
+  - type: worker
+    name: ig-report-bot
+    env: python
+    runtime: python3.11
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m src.main
+    autoDeploy: true
+    plan: starter
+    envVars:
+      - key: TELEGRAM_BOT_TOKEN
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: OPENAI_MODEL
+        value: gpt-4o-mini
+      - key: TIMEZONE
+        value: Africa/Lagos
+      - key: OCR_MODE
+        value: openai
+      - key: BOSS_CHAT_ID
+        value: "-1002685860937"
+      - key: BOSS_THREAD_ID
+        value: "9"
+      - key: FORCE_ENV_DESTINATION
+        value: "1"
+      - key: BOT_DB_PATH
+        value: /var/data/bot.db
+    disks:
+      - name: bot-db
+        mountPath: /var/data
+        sizeGB: 1
